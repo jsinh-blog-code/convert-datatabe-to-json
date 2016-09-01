@@ -24,7 +24,6 @@
 
         public int ManagerId { get; set; }
 
-        [JsonIgnore]
         public string FirstName
         {
             get
@@ -39,7 +38,6 @@
             }
         }
 
-        [JsonIgnore]
         public string LastName
         {
             get
@@ -54,7 +52,6 @@
             }
         }
 
-        [JsonIgnore]
         public int AverageSalePerDay
         {
             get
