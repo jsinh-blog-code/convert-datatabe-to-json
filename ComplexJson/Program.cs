@@ -5,10 +5,12 @@
     using System.Data;
 
     using AutoMapper;
+    using AutoMapper.Data;
 
     using Newtonsoft.Json;
     using System.Data.SqlClient;
     using System.Configuration;
+    using AutoMapper.Mappers;
 
     public class Program
     {
@@ -32,8 +34,16 @@
                 sqlDataAdpater.Fill(dataSet);
             }
 
-            Mapper.CreateMap<IDataReader, List<Employee>>();
+            //Mapper.CreateMap<IDataReader, List<Employee>>();
+            //MapperRegistry.Mappers.Add(new DataReaderMapper());
+            Mapper.Initialize(cfg =>
+            {
+                MapperRegistry.Mappers.Insert(0, new DataReaderMapper());
+                cfg.CreateMap<IDataReader, List<Employee>>();
+            });
+
             var datTable = dataSet.Tables[0];
+
             var result = Mapper.Map<IDataReader, List<Employee>>(datTable.CreateDataReader());
             var resultJson = JsonConvert.SerializeObject(result);
 
